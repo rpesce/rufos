@@ -83,3 +83,29 @@ class Cliente(models.Model):
 #        self.cliente_lista_precos,
 #       self.cliente_ativo
 
+class Produto(models.Model):
+    produto_nome = models.CharField(max_length=200, help_text="Nome do produto")
+    produto_codigo = models.DecimalField(max_digits=5, decimal_places=2, help_text="Código do produto")
+    produto_ncm = models.CharField(max_length=200, help_text="NCM do produto")
+    produto_categoria = models.CharField(max_length=200, help_text="Categoria do produto")
+    produto_foto = models.CharField(max_length=200, help_text="Foto do produto")
+    produto_un_medida = models.DecimalField(max_digits=3, decimal_places=2, help_text="Código do produto", help_text="Unidade de medida do produto")
+    origem_propria = 'Prop'
+    origem_terceiros = 'Terc'
+    produto_origem_opcoes = [
+        (origem_propria, 'Própria'),
+        (origem_terceiros, 'Terceiros'),
+    ]
+    produto_origem = models.CharField(
+        max_length = 4,
+        choices = produto_origem_opcoes,
+        help_text="Origem do produto",
+    )
+    produto_custo = models.DecimalField(max_digits=5, decimal_places=2, help_text="Custo do produto")
+    produto_ativo = models.BooleanField()
+
+    def __str__(self):
+        return self.produto_nome
+
+
+
