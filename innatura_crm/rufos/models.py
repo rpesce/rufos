@@ -65,18 +65,21 @@ class Cliente(models.Model):
     cliente_ativo = models.BooleanField()
     
     def __str__(self):
-        return '%s %s %s %s %s %s %s %s %s %s %s %s %s %s' % (
-            self.cliente_tipo,
-            self.cliente_nome_fantasia,
-            self.cliente_razao_social,
-            self.cliente_nome_contato,
-            self.cliente_cep,
-            self.cliente_rua,
-            self.cliente_numero,
-            self.cliente_complemento,
-            self.cliente_cidade,
-            self.cliente_email,
-            self.cliente_telefone,
-            self.cliente_dias_entrega,
-            self.cliente_lista_precos,
-            self.cliente_ativo)
+        return self.cliente_nome_fantasia
+
+#%s %s %s %s %s %s %s %s %s %s %s %s %s
+#            self.cliente_tipo,
+#            self.cliente_nome_fantasia,
+#           self.cliente_razao_social,
+#          self.cliente_nome_contato,
+#         self.cliente_cep,
+#        self.cliente_rua,
+#       self.cliente_numero,
+#      self.cliente_complemento,
+#            self.cliente_cidade,
+#           self.cliente_email,
+#          self.cliente_telefone,
+#         self.cliente_dias_entrega,
+#        self.cliente_lista_precos,
+#       self.cliente_ativo
+

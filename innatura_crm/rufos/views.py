@@ -6,4 +6,4 @@ from django.http import HttpResponse
 
 
 def index(request):
-    return HttpResponse("Hello, world. You're at the clients index.")
+    return HttpResponse("Aqui o rufos vai colocar todo o front end (Criar uma API)")
