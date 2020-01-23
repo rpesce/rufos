@@ -63,6 +63,7 @@ class Cliente(models.Model):
         help_text="Lista de preços da empresa",
     )
     cliente_ativo = models.BooleanField()
+    datestamp = models.DateTimeField(auto_now_add=True)
     
     def __str__(self):
         return self.cliente_nome_fantasia
@@ -88,8 +89,8 @@ class Produto(models.Model):
     produto_codigo = models.DecimalField(max_digits=5, decimal_places=2, help_text="Código do produto")
     produto_ncm = models.CharField(max_length=200, help_text="NCM do produto")
     produto_categoria = models.CharField(max_length=200, help_text="Categoria do produto")
-    produto_foto = models.CharField(max_length=200, help_text="Foto do produto")
-    produto_un_medida = models.DecimalField(max_digits=3, decimal_places=2, help_text="Código do produto", help_text="Unidade de medida do produto")
+    produto_foto = models.ImageField(upload_to = 'uploads/', help_text="Foto do produto")
+    produto_un_medida = models.DecimalField(max_digits=3, decimal_places=2, help_text="Unidade de medida do produto")
     origem_propria = 'Prop'
     origem_terceiros = 'Terc'
     produto_origem_opcoes = [
@@ -103,6 +104,7 @@ class Produto(models.Model):
     )
     produto_custo = models.DecimalField(max_digits=5, decimal_places=2, help_text="Custo do produto")
     produto_ativo = models.BooleanField()
+    datestamp = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return self.produto_nome
