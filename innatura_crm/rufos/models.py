@@ -110,4 +110,34 @@ class Produto(models.Model):
         return self.produto_nome
 
 
-
+class Pedido(models.Model):
+    pedido_date = models.DateTimeField(auto_now_add=True)
+    pedido_cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE)
+    pedido_produtos = models.ForeignKey(Produto, on_delete=models.CASCADE)
+    pgto_cre = 'Cre'
+    pgto_deb = 'Deb'
+    pgto_din = 'Din'
+    pedido_pgto_opcoes = [
+        (pgto_cre, 'Crédito'),
+        (pgto_deb, 'Débito'),
+        (pgto_din, 'Dinheiro'),
+    ]
+    pedido_pagamento = models.CharField(
+        max_length = 3,
+        choices = pedido_pgto_opcoes,
+        help_text="Tipo de pagamento",
+    )
+    pedido_sub_total = models.DecimalField(max_digits=5, decimal_places=2, help_text="Valor total do pedido")
+    status_entregue = 'ent'
+    status_a_entregar = 'aen'
+    status_cancelado = 'can'
+    pedido_status_opcoes = [
+        (status_entregue, 'Entregue'),
+        (status_a_entregar, 'A entregar'),
+        (status_cancelado, 'Cancelado'),
+    ]
+    pedido_status = models.CharField(
+        max_length = 3,
+        choices = pedido_status_opcoes,
+        help_text="Status do pedido",
+    )
