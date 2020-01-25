@@ -2,12 +2,6 @@ from django.db import models
 
 # Create your models here.
 
-""""class Person(models.Model):
-    name = models.CharField(max_length = 200)
-    def __str__(self):
-        return self.name
-"""
-
 class Entrega(models.Model):
     segunda = 'SEG'
     terca = 'TER'
@@ -87,7 +81,7 @@ class Produto(models.Model):
     produto_ncm = models.CharField(verbose_name="NCM", max_length=200)
     produto_categoria = models.CharField(verbose_name="categoria", max_length=200)
     produto_foto = models.ImageField(upload_to = 'uploads/', verbose_name="foto")
-    produto_un_medida = models.DecimalField(max_digits=3, decimal_places=2, help_text="Unidade de medida do produto")
+    produto_un_medida = models.DecimalField(verbose_name="unidade de medida", max_digits=3, decimal_places=2, help_text="Unidade em kilograma")
     origem_propria = 'Prop'
     origem_terceiros = 'Terc'
     produto_origem_opcoes = [
@@ -97,29 +91,21 @@ class Produto(models.Model):
     produto_origem = models.CharField(
         max_length = 4,
         choices = produto_origem_opcoes,
-        help_text="Origem do produto",
+        verbose_name="origem",
     )
-    produto_preco_tb1 = models.DecimalField(max_digits=5, decimal_places=2, default=0.00, help_text="Preço Tabela 1")
-    produto_preco_tb2 = models.DecimalField(max_digits=5, decimal_places=2, default=0.00, help_text="Preço Tabela 2")
-    produto_preco_tb3 = models.DecimalField(max_digits=5, decimal_places=2, default=0.00, help_text="Preço Tabela 3")
-    produto_custo = models.DecimalField(max_digits=5, decimal_places=2, default=0.00, help_text="Custo do produto")
-    produto_ativo = models.BooleanField(default=True)
+    produto_preco_tb1 = models.DecimalField(verbose_name="preço tabela 1", max_digits=5, decimal_places=2, default=0.00)
+    produto_preco_tb2 = models.DecimalField(verbose_name="preço tabela 2", max_digits=5, decimal_places=2, default=0.00)
+    produto_preco_tb3 = models.DecimalField(verbose_name="preço tabela 3", max_digits=5, decimal_places=2, default=0.00)
+    produto_custo = models.DecimalField(verbose_name="preço custo", max_digits=5, decimal_places=2, default=0.00)
+    produto_ativo = models.BooleanField(verbose_name="produto ativo", default=True)
     datestamp = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return self.produto_nome
 
-"""class pedidoItem(models.Model):
-    pedido_item = models.ForeignKey(Produto, on_delete=models.CASCADE)
-    pedido_item_quantidade = models.PositiveIntegerField(default=0)
-
-    pedido_item_preco = models.ForeignKey(Cliente.cliente_lista_precos)
-"""
-
 class Pedido(models.Model):
     pedido_date = models.DateTimeField(auto_now_add=True)
     pedido_cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE)
-    
     pgto_cre = 'Cre'
     pgto_deb = 'Deb'
     pgto_din = 'Din'
@@ -133,23 +119,27 @@ class Pedido(models.Model):
         choices = pedido_pgto_opcoes,
         help_text="Tipo de pagamento",
     )
-    
     pedido_sub_total = models.DecimalField(max_digits=5, decimal_places=2, help_text="Valor total do pedido")
-    
     status_entregue = 'ent'
-    status_a_entregar = 'aen'
+    status_confirmado = 'con'
     status_cancelado = 'can'
     pedido_status_opcoes = [
         (status_entregue, 'Entregue'),
-        (status_a_entregar, 'Recebido'),
+        (status_confirmado, 'Confirmado'),
         (status_cancelado, 'Cancelado'),
     ]
     pedido_status = models.CharField(
         max_length = 3,
         choices = pedido_status_opcoes,
         help_text="Status do pedido",
-        default= status_a_entregar,
+        default= status_confirmado,
     )
 
     def __str__(self):
-        return self.pedido_cliente.cliente_nome_fantasia
+        return '%s' % (self.pedido_cliente.cliente_nome_fantasia)
+
+class PedidoProduto(models.Model):
+    pedido = models.ForeignKey(Pedido, on_delete=models.PROTECT)
+    produto = models.ForeignKey(Produto, on_delete=models.PROTECT, null=True, blank=True)
+    produto_quantidade = models.PositiveIntegerField(default=0)
+    pedido_item_preco = models.ForeignKey(Cliente, on_delete=models.PROTECT)
