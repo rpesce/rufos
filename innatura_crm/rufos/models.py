@@ -104,8 +104,9 @@ class Produto(models.Model):
         return self.produto_nome
 
 class PedidoProduto(models.Model):
+    #pedido = models.ForeignKey(PedidoProduto, on_delete=models.CASCADE)
     produto = models.ForeignKey(Produto, on_delete=models.CASCADE)
-    quantidade = models.PositiveIntegerField(default=0)
+    quantidade = models.PositiveIntegerField(default=1)
 
 class Pedido(models.Model):
     pedido_date = models.DateTimeField(auto_now_add=True)
@@ -123,7 +124,8 @@ class Pedido(models.Model):
         choices = pedido_pgto_opcoes,
         help_text="Tipo de pagamento",
     )
-    pedido_produtos = models.ForeignKey(PedidoProduto, on_delete=models.CASCADE)
+    #pedido_produtos = models.ManyToManyField(Produto)
+    pedido_produtos = models.ForeignKey(Produto, on_delete=models.CASCADE)
     pedido_sub_total = models.DecimalField(max_digits=5, decimal_places=2, help_text="Valor total do pedido")
     status_entregue = 'ent'
     status_confirmado = 'con'
