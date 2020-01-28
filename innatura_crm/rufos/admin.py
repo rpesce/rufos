@@ -1,17 +1,17 @@
 from django.contrib import admin
 
 # Register your models here.
-from .models import Cliente, Produto, Pedido
+from .models import Cliente, Produto, Pedido, PedidoProduto
 
-class PedidoInline(admin.StackedInline):
-    model = Pedido
+class PedidoProdutoInline(admin.StackedInline):
+    model = PedidoProduto
     extra = 2
 
-class ProdutoAdmin(admin.ModelAdmin):
+class PedidoAdmin(admin.ModelAdmin):
     inlines = [
-        PedidoInline,
+        PedidoProdutoInline,
     ]
 
 admin.site.register(Cliente)
-admin.site.register(Produto, ProdutoAdmin)
-admin.site.register(Pedido)
+admin.site.register(Produto)
+admin.site.register(Pedido, PedidoAdmin)
