@@ -1,4 +1,4 @@
-Rufos is a personal project
+Rufos is a CRM project developed for Innatura Brotos S.A.
 
 Utilizes Python 3.7.4
 
