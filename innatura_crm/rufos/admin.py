@@ -6,6 +6,8 @@ from .models import Cliente, Produto, Pedido, PedidoProduto
 class PedidoProdutoInline(admin.StackedInline):
     model = PedidoProduto
     extra = 2
+    def subtotal(self, obj):
+        return "$" + str(obj.quantidade * obj.valor_total)
 
 class PedidoAdmin(admin.ModelAdmin):
     list_display = ['id', 'pedido_date', 'pedido_cliente', 'pedido_pagamento', 'pedido_sub_total', 'pedido_status']

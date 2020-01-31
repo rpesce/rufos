@@ -119,7 +119,6 @@ class Pedido(models.Model):
         choices = pedido_pgto_opcoes,
         verbose_name="tipo de pagamento",
     )
-    pedido_sub_total = models.DecimalField(verbose_name="sub total", max_digits=5, decimal_places=2)
     status_entregue = 'ent'
     status_confirmado = 'con'
     status_cancelado = 'can'
@@ -134,6 +133,8 @@ class Pedido(models.Model):
         verbose_name="status",
         default= status_confirmado,
     )
+    pedido_sub_total = models.DecimalField(verbose_name="sub total", max_digits=5, decimal_places=2)
+
 
     def __str__(self):
         return '%s' % (self.pedido_cliente.cliente_nome_fantasia)
@@ -143,3 +144,13 @@ class PedidoProduto(models.Model):
     pedido = models.ForeignKey(Pedido, on_delete=models.CASCADE)
     produto = models.ForeignKey(Produto, on_delete=models.CASCADE)
     quantidade = models.PositiveIntegerField(default=1)
+    
+    def valor_tt(self, pedido, quantidade, produto):
+        self.tabela = self.pedido.pedido_cliente.cliente_lista_precos
+        if tabela == "TB1":
+            self.valor_total = self.quantidade * self.produto.produto_preco_tb1
+        elif tabela == "TB2":
+            self.valor_total = self.quantidade * self.produto.produto_preco_tb2
+        elif tabela == "TB3":
+            self.valor_total = self.quantidade * self.produto.produto_preco_tb3
+        return valor_total
