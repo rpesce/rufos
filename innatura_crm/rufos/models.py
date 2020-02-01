@@ -144,13 +144,14 @@ class PedidoProduto(models.Model):
     pedido = models.ForeignKey(Pedido, on_delete=models.CASCADE)
     produto = models.ForeignKey(Produto, on_delete=models.CASCADE)
     quantidade = models.PositiveIntegerField(default=1)
-    
-    def valor_tt(self, pedido, quantidade, produto):
+    """def valor_tt(self, pedido):
         self.tabela = self.pedido.pedido_cliente.cliente_lista_precos
-        if tabela == "TB1":
+        print(tabela)
+        
+         , quantidade, produto if tabela == "TB1":
             self.valor_total = self.quantidade * self.produto.produto_preco_tb1
         elif tabela == "TB2":
             self.valor_total = self.quantidade * self.produto.produto_preco_tb2
         elif tabela == "TB3":
             self.valor_total = self.quantidade * self.produto.produto_preco_tb3
-        return valor_total
+        return self.valor_total"""

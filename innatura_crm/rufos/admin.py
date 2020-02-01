@@ -3,17 +3,18 @@ from django.contrib import admin
 # Register your models here.
 from .models import Cliente, Produto, Pedido, PedidoProduto
 
-class PedidoProdutoInline(admin.StackedInline):
+class PedidoProdutoInline(admin.TabularInline):
     model = PedidoProduto
-    extra = 2
-    def subtotal(self, obj):
-        return "$" + str(obj.quantidade * obj.valor_total)
+    extra = 3
+    #readonly_fields = ['subtotal']
+    """def subtotal(self, obj):
+        return "$" + str(self.obj.valor_total)"""
 
 class PedidoAdmin(admin.ModelAdmin):
-    list_display = ['id', 'pedido_date', 'pedido_cliente', 'pedido_pagamento', 'pedido_sub_total', 'pedido_status']
+    list_display = ['id', 'pedido_date', 'pedido_cliente', 'pedido_pagamento', 'pedido_status']
     readonly_fields=('pedido_sub_total',)
     list_filter = ['pedido_cliente', 'pedido_status']
-    ordering = ('id', 'pedido_date', 'pedido_cliente', 'pedido_pagamento', 'pedido_status')
+    ordering = ('id', 'pedido_date', 'pedido_cliente', 'pedido_status')
     inlines = [
         PedidoProdutoInline,
     ]
