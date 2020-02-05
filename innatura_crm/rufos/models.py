@@ -67,7 +67,7 @@ class Cliente(models.Model):
     cliente_lista_precos = models.CharField(
         max_length = 3,
         choices = cliente_tabela_opcoes,
-        help_text="Lista de preços da empresa",
+        verbose_name="tabela de preços",
     )
     cliente_ativo = models.BooleanField(default=True)
     datestamp = models.DateTimeField(auto_now_add=True)
@@ -104,8 +104,8 @@ class Produto(models.Model):
         return self.produto_nome
 
 class Pedido(models.Model):
-    pedido_date = models.DateTimeField(auto_now_add=True)
-    pedido_cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE)
+    pedido_date = models.DateTimeField(verbose_name="data", auto_now_add=True)
+    pedido_cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE, verbose_name="cliente")
     pgto_cre = 'Cre'
     pgto_deb = 'Deb'
     pgto_din = 'Din'
@@ -117,11 +117,8 @@ class Pedido(models.Model):
     pedido_pagamento = models.CharField(
         max_length = 3,
         choices = pedido_pgto_opcoes,
-        help_text="Tipo de pagamento",
+        verbose_name="tipo de pagamento",
     )
-    #pedido_produtos = models.ManyToManyField(PedidoProduto)
-    #pedido_produtos = models.ForeignKey(Produto, on_delete=models.CASCADE)
-    pedido_sub_total = models.DecimalField(max_digits=5, decimal_places=2, help_text="Valor total do pedido")
     status_entregue = 'ent'
     status_confirmado = 'con'
     status_cancelado = 'can'
@@ -133,9 +130,10 @@ class Pedido(models.Model):
     pedido_status = models.CharField(
         max_length = 3,
         choices = pedido_status_opcoes,
-        help_text="Status do pedido",
+        verbose_name="status",
         default= status_confirmado,
     )
+    pedido_sub_total = models.DecimalField(verbose_name="sub total", max_digits=5, decimal_places=2, default=1)
 
     def __str__(self):
         return '%s' % (self.pedido_cliente.cliente_nome_fantasia)
@@ -145,3 +143,23 @@ class PedidoProduto(models.Model):
     pedido = models.ForeignKey(Pedido, on_delete=models.CASCADE)
     produto = models.ForeignKey(Produto, on_delete=models.CASCADE)
     quantidade = models.PositiveIntegerField(default=1)
+    
+
+
+    """@property
+    def get_price(self, produto):
+        self.tabela = self.pedido.pedido_cliente.cliente_lista_precos
+        return self.tabela
+
+
+        def valor_tt(self, pedido):
+        self.tabela = self.pedido.pedido_cliente.cliente_lista_precos
+        print(tabela)
+        
+         , quantidade, produto if tabela == "TB1":
+            self.valor_total = self.quantidade * self.produto.produto_preco_tb1
+        elif tabela == "TB2":
+            self.valor_total = self.quantidade * self.produto.produto_preco_tb2
+        elif tabela == "TB3":
+            self.valor_total = self.quantidade * self.produto.produto_preco_tb3
+        return self.valor_total"""
