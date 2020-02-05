@@ -12,7 +12,7 @@ class PedidoProdutoInline(admin.TabularInline):
 
 class PedidoAdmin(admin.ModelAdmin):
     list_display = ['id', 'pedido_date', 'pedido_cliente', 'pedido_pagamento', 'pedido_status']
-    readonly_fields=('pedido_sub_total',)
+    #readonly_fields=('pedido_sub_total',)
     list_filter = ['pedido_cliente', 'pedido_status']
     ordering = ('id', 'pedido_date', 'pedido_cliente', 'pedido_status')
     inlines = [
