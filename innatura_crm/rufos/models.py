@@ -119,16 +119,16 @@ class Pedido(models.Model):
         choices = pedido_pgto_opcoes,
         verbose_name="tipo de pagamento",
     )
-    status_entregue = 'ent'
-    status_confirmado = 'con'
-    status_cancelado = 'can'
+    status_entregue = 'Entregue'
+    status_confirmado = 'Confirmado'
+    status_cancelado = 'Cancelado'
     pedido_status_opcoes = [
         (status_entregue, 'Entregue'),
         (status_confirmado, 'Confirmado'),
         (status_cancelado, 'Cancelado'),
     ]
     pedido_status = models.CharField(
-        max_length = 3,
+        max_length = 10,
         choices = pedido_status_opcoes,
         verbose_name="status",
         default= status_confirmado,
