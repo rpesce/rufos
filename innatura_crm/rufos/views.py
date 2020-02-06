@@ -1,19 +1,23 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 
 # Create your views here.
 
 from django.http import HttpResponse
-from .models import Cliente
+from .models import Cliente, Pedido
 
 
 def index(request):
     #return HttpResponse("Aqui o rufos vai colocar todo o front end (Criar uma API)")
     all_clients = Cliente.objects.all()
-    output = ', '.join([q.cliente_nome_fantasia for q in all_clients])
-    return HttpResponse(output)
+    context = {
+        'all_clients': all_clients,
+    }
+    return render(request, 'rufos/index.html', context)
 
 def detalhes_cliente(request, cliente_id):
-    return HttpResponse("Você está olhando o cliente número: %s." % cliente_id)
+    cliente = get_object_or_404(Cliente, pk=cliente_id)
+    pedido = Pedido.objects.filter(pedido_cliente=cliente_id)
+    return render(request, 'rufos/detalhes_cliente.html', {'cliente':cliente, 'pedido':pedido})
 
 def pedidos_cliente(request, cliente_id):
     response = "Você está olhando os pedidos do cliente número: %s."

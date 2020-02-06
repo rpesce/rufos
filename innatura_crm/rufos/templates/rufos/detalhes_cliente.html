@@ -1,0 +1,29 @@
+<h1>{{ cliente.cliente_nome_fantasia }}</h1>
+<ul>
+    <li><b>Nome Fantasia:</b> {{ cliente.cliente_nome_fantasia }}</li>
+    <li><b>Razão Social:</b> {{ cliente.cliente_razao_social }}</li>
+    <li><b>Endereço:</b> {{ cliente.cliente_rua }}, {{ cliente.cliente_numero }} / {{ cliente.cliente_complemento }}</li>
+    <li><b>CEP:</b> {{ cliente.cliente_cep }}</li>
+    <li><b>Cidade:</b> {{ cliente.cliente_cidade }}</li>
+    <li><b>Preço:</b> {{ cliente.cliente_lista_precos }}</li>
+    <li><b>Situação:</b> {{ cliente.cliente_ativo }}</li>
+</ul>
+<h2>Contato</h2>
+<ul>
+    <li><b>Nome:</b> {{ cliente.cliente_nome_contato }}</li>
+    <li><b>Email:</b> {{ cliente.cliente_email }}</li>
+    <li><b>Telefone:</b> {{ cliente.cliente_telefone }}</li>
+    <li>{{ cliente.cliente_dias_entrega }}</li>
+</ul>
+
+{% if pedido %}
+    <hr>
+    <h2>Pedidos</h2>
+        {% for p in pedido %}
+        <ul>
+            <li>{{ p.pedido_date }}</li>
+                <li>{{ p.pedido_pagamento }}</li>
+                <li>{{ p.pedido_status }}</li>
+        </ul>
+        {% endfor %}
+{% endif %}
