@@ -18,11 +18,24 @@ def index(request):
 def detalhes_cliente(request, cliente_id):
     cliente = get_object_or_404(Cliente, pk=cliente_id)
     pedido = Pedido.objects.filter(pedido_cliente=cliente_id)
+    pedidoproduto = PedidoProduto.objects.all().select_related()
+    context={
+        'cliente':cliente,
+        'pedido':pedido,
+        'pedidoproduto': pedidoproduto,
+    }
+
+    return render(request, 'rufos/detalhes_cliente.html', context)
+
+    #def produtos(pedido):
+        #for p in pedido:
+            #produto = p.pedidoproduto_set.all()
+            #return produto
+
+    #produto = pedido.pedidoproduto_set.all()
+    #def produto(pedido_id):
+        #produto = PedidoProduto.objects.all().filter(pedido=pedido_id)
     
-    def produto(pedido_id):
-        produto = PedidoProduto.objects.filter(pedido=pedido_id)
-    
-    return render(request, 'rufos/detalhes_cliente.html', {'cliente':cliente, 'pedido':pedido, 'produto':produto})
 
 
 def pedidos_cliente(request, cliente_id):

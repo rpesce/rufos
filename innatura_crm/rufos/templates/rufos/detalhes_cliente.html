@@ -13,7 +13,7 @@
     <li><b>Nome:</b> {{ cliente.cliente_nome_contato }}</li>
     <li><b>Email:</b> {{ cliente.cliente_email }}</li>
     <li><b>Telefone:</b> {{ cliente.cliente_telefone }}</li>
-    <li><b>Dias de entrega:</b> {% for d in dias %} "{{ d }}, " {% endfor %}</li>
+    <li><b>Dias de entrega:</b> {{ cliente.cliente_dias_entrega.cliente_dias_entrega }} </li>
 </ul>
 
 {% if pedido %}
@@ -25,13 +25,13 @@
             <li><b>Tipo de pagamento: </b>{{ p.pedido_pagamento }}</li>
             <li><b>Status do Pedido: </b>{{ p.pedido_status }}</li>
             <li><b>Produtos:</b>
-                {% for p in produto %}
-                    <ul>    
-                        <li>{{ p.produto }}, {{ p.quantidade }}</li>
-                    </ul>
-                {% endfor %}
+                <ul>    
+                    <li>{{ p.pedidoproduto.pedido.produto_nome }}</li>
+                    <li>{{ p.pedidoproduto.quantidade }}</li>
+                </ul>
             </li>
             <li><b>Sub-total: </b>{{ p.pedido_sub_total }}</li>
         </ul>
+        <hr>
         {% endfor %}
 {% endif %}
