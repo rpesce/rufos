@@ -143,7 +143,10 @@ class PedidoProduto(models.Model):
     pedido = models.ForeignKey(Pedido, on_delete=models.CASCADE)
     produto = models.ForeignKey(Produto, on_delete=models.CASCADE)
     quantidade = models.PositiveIntegerField(default=1)
-    
+
+    def __str__(self):
+        return '%s' % (self.pedido.pedido_cliente)
+
     """@property
     def get_price(self, produto):
         self.tabela = self.pedido.pedido_cliente.cliente_lista_precos
