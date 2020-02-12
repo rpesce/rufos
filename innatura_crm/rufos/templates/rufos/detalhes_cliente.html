@@ -13,7 +13,7 @@
     <li><b>Nome:</b> {{ cliente.cliente_nome_contato }}</li>
     <li><b>Email:</b> {{ cliente.cliente_email }}</li>
     <li><b>Telefone:</b> {{ cliente.cliente_telefone }}</li>
-    <li><b>Dias de entrega:</b> {{ cliente.cliente_dias_entrega.cliente_dias_entrega }} </li>
+    <li><b>Dias de entrega:</b> {{ cliente.entrega.cliente_dias_entrega }} </li>
 </ul>
 
 {% if pedido %}
@@ -26,7 +26,7 @@
             <li><b>Status do Pedido: </b>{{ p.pedido_status }}</li>
             <li><b>Produtos:</b>
                 <ul>    
-                    <li>{{ p.pedidoproduto.pedido.produto_nome }}</li>
+                    <li>{{ p.pedido.produto_nome }}</li>
                     <li>{{ p.pedidoproduto.quantidade }}</li>
                 </ul>
             </li>

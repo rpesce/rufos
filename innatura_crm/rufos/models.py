@@ -22,7 +22,6 @@ class Entrega(models.Model):
     cliente_dias_entrega = models.CharField(
         max_length = 3,
         choices = entrega_opcoes,
-        help_text="Dias de entrega",
     )
     
     def __str__(self):
@@ -51,10 +50,8 @@ class Cliente(models.Model):
     cliente_email = models.EmailField(verbose_name="email de contato", max_length=254, unique="true")
     cliente_telefone = models.CharField(verbose_name="telefone de contato", max_length=200, help_text="Exemplo: 51 9 0000 0000")
     cliente_dias_entrega = models.ManyToManyField(
-        to='rufos.Entrega',
-        related_name='dias_entrega',
+        Entrega,
         verbose_name="dias de entrega",
-        help_text="Escolha multiplos dias",
     )
     tabela_1 = 'TB1'
     tabela_2 = 'TB2'
