@@ -34,6 +34,10 @@ def detalhes_cliente(request, cliente_id):
         #produto = PedidoProduto.objects.all().filter(pedido=pedido_id)
     
 
-def pedidos_cliente(request, cliente_id):
-    response = "Você está olhando os pedidos do cliente número: %s."
-    return HttpResponse(response % cliente_id)
+def pedidos_cliente(request, pedido_id):
+    pedido = get_object_or_404(Pedido, pk=pedido_id)
+    #pedido = Pedido.objects.filter(pedido_cliente=cliente_id)
+    context={
+        'pedido':pedido,
+    }
+    return render(request, 'rufos/pedidos_cliente.html', context)
