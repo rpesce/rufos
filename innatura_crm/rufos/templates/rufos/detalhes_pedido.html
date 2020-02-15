@@ -1,0 +1,22 @@
+<p><a href="/">Back to index</a></p>
+<h1>Detalhes do pedido #{{ pedido.id }}</h1>
+<ul>
+    <li><b>#Pedido:</b> {{pedido.id }}</li>
+    <li><b>Cliente:</b> {{ pedido.pedido_cliente_id }} - {{pedido.pedido_cliente }}</li>
+    <li><b>Data:</b> {{ pedido.pedido_date }}</li>
+    <li><b>Tipo de pagamento:</b> {{ pedido.pedido_pagamento }}</li>
+    <li><b>Produtos:</b></li>
+    {% for p in produto %}
+        <ul>
+            <li>{{ p.quantidade }} x {{ p.produto }}</li>
+        </ul>
+    {% endfor %}
+    <li><b>Sub total:</b> {{ pedido.pedido_sub_total }}</li>
+    <li><b>Status:</b> {{ pedido.pedido_status }}</li>
+</ul>
+
+<!--
+    'id', 'pedido_cliente', 'pedido_cliente_id', 
+    'pedido_date', 'pedido_pagamento', 'pedido_status', 
+    'pedido_sub_total', 'pedidoproduto_set'
+-->
