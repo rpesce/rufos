@@ -28,9 +28,11 @@
             <li><b>Status do Pedido: </b>{{ p.pedido_status }}</li>
             <li><b>Produtos:</b>
             {% for prd in produtos %}
-                <ul>    
-                    <li> {{ prd.quantidade }} x <a href="/produtos/{{ prd.produto_id }}">{{ prd.produto }}</a></li>
-                </ul>
+                {% if prd.pedido_id == p.id %}
+                    <ul>
+                        <li> {{ prd.quantidade }} x <a href="/produtos/{{ prd.produto_id }}">{{ prd.produto }}</a></li>
+                    </ul>
+                {% endif %}
             {% endfor %}
             </li>
             <li><b>Sub-total: </b>{{ p.pedido_sub_total }}</li>
