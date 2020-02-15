@@ -26,11 +26,19 @@
             <li><b>Data: </b>{{ p.pedido_date }}</li>
             <li><b>Tipo de pagamento: </b>{{ p.pedido_pagamento }}</li>
             <li><b>Status do Pedido: </b>{{ p.pedido_status }}</li>
+            <li><b>Tabela: </b>{{ p.pedido_cliente.cliente_lista_precos }}</li>
             <li><b>Produtos:</b>
             {% for prd in produtos %}
                 {% if prd.pedido_id == p.id %}
                     <ul>
-                        <li> {{ prd.quantidade }} x <a href="/produtos/{{ prd.produto_id }}">{{ prd.produto }}</a></li>
+                        <li> {{ prd.quantidade }} x <a href="/produtos/{{ prd.produto_id }}">{{ prd.produto }}</a>,
+                        {% if prd.pedido.pedido_cliente.cliente_lista_precos == 'tb1' %}
+                            <b>Preço: </b>R${{ prd.produto.produto_preco_tb1 }}</li>
+                        {% elif prd.pedido.pedido_cliente.cliente_lista_precos == 'tb2' %}
+                            <b>Preço: </b>R${{ prd.produto.produto_preco_tb2}}</li>
+                        {% elif prd.pedido.pedido_cliente.cliente_lista_precos == 'tb3' %}
+                            <b>Preço: </b>R${{ prd.produto.produto_preco_tb3}}</li>
+                        {% endif %}
                     </ul>
                 {% endif %}
             {% endfor %}

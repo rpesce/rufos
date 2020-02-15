@@ -53,9 +53,9 @@ class Cliente(models.Model):
         Entrega,
         verbose_name="dias de entrega",
     )
-    tabela_1 = 'TB1'
-    tabela_2 = 'TB2'
-    tabela_3 = 'TB3'
+    tabela_1 = 'tb1'
+    tabela_2 = 'tb2'
+    tabela_3 = 'tb3'
     cliente_tabela_opcoes = [
         (tabela_1, 'Tabela 1'),
         (tabela_2, 'Tabela 2'),

@@ -8,7 +8,14 @@
     <li><b>Produtos:</b></li>
     {% for p in produto %}
         <ul>
-            <li>{{ p.quantidade }} x <a href='/produtos/{{ p.produto_id }}'>{{ p.produto }}</a></li>
+            <li>{{ p.quantidade }} x <a href='/produtos/{{ p.produto_id }}'>{{ p.produto }}</a>
+                {% if p.pedido.pedido_cliente.cliente_lista_precos == 'tb1' %}
+                    , R${{ p.produto.produto_preco_tb1 }}, <b>total:</b></li>
+                {% elif p.pedido.pedido_cliente.cliente_lista_precos == 'tb2' %}
+                    , R${{ p.produto.produto_preco_tb2}}</li>
+                    {% elif p.pedido.pedido_cliente.cliente_lista_precos == 'tb3' %}
+                    , R${{ p.produto.produto_preco_tb3}}</li>
+                {% endif %}
         </ul>
     {% endfor %}
     <li><b>Sub total:</b> {{ pedido.pedido_sub_total }}</li>
