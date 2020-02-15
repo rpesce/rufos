@@ -21,15 +21,15 @@
     <hr>
     <h2>Pedidos</h2>
         {% for p in pedido %}
+        <h4><a href="/pedidos/{{ p.id }}"><b>#Pedido: </b>{{ p.id }}</a></h4>
         <ul>
-            <li><a href="/pedidos/{{ p.id }}"><b>#Pedido: </b>{{ p.id }}</a></li>
             <li><b>Data: </b>{{ p.pedido_date }}</li>
             <li><b>Tipo de pagamento: </b>{{ p.pedido_pagamento }}</li>
             <li><b>Status do Pedido: </b>{{ p.pedido_status }}</li>
             <li><b>Produtos:</b>
             {% for prd in produtos %}
                 <ul>    
-                    <li> {{ prd.quantidade }} x {{ prd.produto }}</li>
+                    <li> {{ prd.quantidade }} x <a href="/produtos/{{ prd.produto_id }}">{{ prd.produto }}</a></li>
                 </ul>
             {% endfor %}
             </li>

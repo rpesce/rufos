@@ -8,15 +8,9 @@
     <li><b>Produtos:</b></li>
     {% for p in produto %}
         <ul>
-            <li>{{ p.quantidade }} x {{ p.produto }}</li>
+            <li>{{ p.quantidade }} x <a href='/produtos/{{ p.produto_id }}'>{{ p.produto }}</a></li>
         </ul>
     {% endfor %}
     <li><b>Sub total:</b> {{ pedido.pedido_sub_total }}</li>
     <li><b>Status:</b> {{ pedido.pedido_status }}</li>
 </ul>
-
-<!--
-    'id', 'pedido_cliente', 'pedido_cliente_id', 
-    'pedido_date', 'pedido_pagamento', 'pedido_status', 
-    'pedido_sub_total', 'pedidoproduto_set'
--->

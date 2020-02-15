@@ -3,7 +3,7 @@ from django.shortcuts import render, get_object_or_404
 # Create your views here.
 
 from django.http import HttpResponse
-from .models import Cliente, Pedido, PedidoProduto
+from .models import Cliente, Pedido, PedidoProduto, Produto
 
 
 def index(request):
@@ -13,7 +13,6 @@ def index(request):
         'all_clients': all_clients,
     }
     return render(request, 'rufos/index.html', context)
-
 
 def detalhes_cliente(request, cliente_id):
     cliente = get_object_or_404(Cliente, pk=cliente_id)
@@ -25,7 +24,6 @@ def detalhes_cliente(request, cliente_id):
         'produtos':produtos,
     }
     return render(request, 'rufos/detalhes_cliente.html', context)
-    
 
 def detalhes_pedido(request, pedido_id):
     pedido = get_object_or_404(Pedido, pk=pedido_id)
@@ -35,3 +33,10 @@ def detalhes_pedido(request, pedido_id):
         'produto':produto,
     }
     return render(request, 'rufos/detalhes_pedido.html', context)
+
+def detalhes_produto(request, produto_id):
+    produto = get_object_or_404(Produto, pk=produto_id)
+    context={
+        'produto':produto,
+    }
+    return render(request, 'rufos/detalhes_produto.html', context)

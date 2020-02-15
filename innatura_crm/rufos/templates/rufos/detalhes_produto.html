@@ -1,0 +1,57 @@
+<p><a href="/">Back to index</a></p>
+
+<h1>{{ produto.produto_nome }}</h1>
+<table>
+    <tr>
+        <td><b>ID:</b></td>
+        <td>{{ produto.id}}</td>
+    </tr>
+    <tr>
+        <td><b>Produto:</b></td>
+        <td>{{ produto.produto_nome}}</td>
+    </tr>
+    <tr>
+        <td><b>Código:</b></td>
+        <td>{{ produto.produto_codigo}}</td>
+    </tr>
+    <tr>
+        <td><b>NCM:</b></td>
+        <td>{{ produto.produto_ncm}}</td>
+    </tr>
+    <tr>
+        <td><b>Categoria:</b></td>
+        <td>{{ produto.produto_categoria}}</td>
+    </tr>
+    <tr>
+        <td><b>Unidade:</b></td>
+        <td>{{ produto.produto_un_medida}}</td>
+    </tr>
+    <tr>
+        <td><b>Origem:</b></td>
+        <td>{{ produto.produto_origem}}</td>
+    </tr>
+    <tr>
+        <td><b>Preço (Tabela 1):</b></td>
+        <td>R$ {{ produto.produto_preco_tb1}}</td>
+    </tr>
+    <tr>
+        <td><b>Preço (Tabela 2):</b></td>
+        <td>R$ {{ produto.produto_preco_tb2}}</td>
+    </tr>
+    <tr>
+        <td><b>Preço (Tabela 3):</b></td> 
+        <td>R$ {{ produto.produto_preco_tb3}}</td>
+    </tr>
+    <tr>
+        <td><b>Preço de custo:</b></td>
+        <td>R$ {{ produto.produto_custo}}</td>
+    </tr>
+    <tr>
+        <td><b>Status:</b></td>
+        {% if produto.produto_ativo == True %}
+            <td>Ativo</td>
+        {% else %}
+            <td>Inativo</td>
+        {% endif %}
+    </tr>
+</table>
