@@ -8,7 +8,7 @@
     <li><b>Produtos:</b></li>
     {% for p in produto %}
         <ul>
-            <li>{{ p.quantidade }} x <a href='/produtos/{{ p.produto_id }}'>{{ p.produto }},</a>
+            <li>{{ p.quantidade }} x <a href='{% url "rufos:detalhes_produto" p.produto_id %}'>{{ p.produto }},</a>
                 {% if p.pedido.pedido_cliente.cliente_lista_precos == 'tb1' %}
                     (<b>Preço:</b> R${{ p.produto.produto_preco_tb1 }})</li>
                 {% elif p.pedido.pedido_cliente.cliente_lista_precos == 'tb2' %}

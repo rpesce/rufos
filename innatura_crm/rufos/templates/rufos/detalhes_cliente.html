@@ -21,7 +21,7 @@
     <hr>
     <h2>Pedidos</h2>
         {% for p in pedido %}
-        <h4><a href="/pedidos/{{ p.id }}"><b>#Pedido: </b>{{ p.id }}</a></h4>
+        <h4><a href="{% url 'rufos:detalhes_pedido' p.id %}"><b>#Pedido: </b>{{ p.id }}</a></h4>
         <ul>
             <li><b>Data: </b>{{ p.pedido_date }}</li>
             <li><b>Tipo de pagamento: </b>{{ p.pedido_pagamento }}</li>
@@ -31,7 +31,7 @@
             {% for prd in produtos %}
                 {% if prd.pedido_id == p.id %}
                     <ul>
-                        <li> {{ prd.quantidade }} x <a href="/produtos/{{ prd.produto_id }}">{{ prd.produto }}</a>,
+                        <li> {{ prd.quantidade }} x <a href="{% url 'rufos:detalhes_produto' prd.produto_id %}">{{ prd.produto }}</a>,
                         {% if prd.pedido.pedido_cliente.cliente_lista_precos == 'tb1' %}
                             (<b>Preço: </b>R${{ prd.produto.produto_preco_tb1 }})</li>
                         {% elif prd.pedido.pedido_cliente.cliente_lista_precos == 'tb2' %}
