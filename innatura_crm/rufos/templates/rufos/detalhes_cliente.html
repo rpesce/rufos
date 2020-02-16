@@ -7,14 +7,14 @@
     <li><b>CEP:</b> {{ cliente.cliente_cep }}</li>
     <li><b>Cidade:</b> {{ cliente.cliente_cidade }}</li>
     <li><b>Preço:</b> {{ cliente.cliente_lista_precos }}</li>
-    <li><b>Situação:</b> {{ cliente.cliente_ativo }}</li>
+    <li><b>Situação:</b> {% if cliente.cliente_ativo == True %} Ativo {% else %} Inativo {% endif %}</li>
 </ul>
 <h2>Contato</h2>
 <ul>
     <li><b>Nome:</b> {{ cliente.cliente_nome_contato }}</li>
     <li><b>Email:</b> {{ cliente.cliente_email }}</li>
     <li><b>Telefone:</b> {{ cliente.cliente_telefone }}</li>
-    <li><b>Dias de entrega:</b> {{ cliente.entrega.cliente_dias_entrega }} </li>
+    <li><b>Dias de entrega:</b> {% for d in dias %} {{ d.cliente_dias_entrega }} {% endfor %}</li>
 </ul>
 
 {% if pedido %}
@@ -33,11 +33,11 @@
                     <ul>
                         <li> {{ prd.quantidade }} x <a href="/produtos/{{ prd.produto_id }}">{{ prd.produto }}</a>,
                         {% if prd.pedido.pedido_cliente.cliente_lista_precos == 'tb1' %}
-                            <b>Preço: </b>R${{ prd.produto.produto_preco_tb1 }}</li>
+                            (<b>Preço: </b>R${{ prd.produto.produto_preco_tb1 }})</li>
                         {% elif prd.pedido.pedido_cliente.cliente_lista_precos == 'tb2' %}
-                            <b>Preço: </b>R${{ prd.produto.produto_preco_tb2}}</li>
+                            (<b>Preço: </b>R${{ prd.produto.produto_preco_tb2}})</li>
                         {% elif prd.pedido.pedido_cliente.cliente_lista_precos == 'tb3' %}
-                            <b>Preço: </b>R${{ prd.produto.produto_preco_tb3}}</li>
+                            (<b>Preço: </b>R${{ prd.produto.produto_preco_tb3}})</li>
                         {% endif %}
                     </ul>
                 {% endif %}

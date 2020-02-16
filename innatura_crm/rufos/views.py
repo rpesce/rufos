@@ -3,7 +3,7 @@ from django.shortcuts import render, get_object_or_404
 # Create your views here.
 
 from django.http import HttpResponse
-from .models import Cliente, Pedido, PedidoProduto, Produto
+from .models import Cliente, Pedido, PedidoProduto, Produto, Entrega
 
 
 def index(request):
@@ -18,10 +18,12 @@ def detalhes_cliente(request, cliente_id):
     cliente = get_object_or_404(Cliente, pk=cliente_id)
     pedido = Pedido.objects.filter(pedido_cliente=cliente_id)
     produtos = PedidoProduto.objects.all()
+    dias = cliente.cliente_dias_entrega.all()
     context={
         'cliente':cliente,
         'pedido':pedido,
         'produtos':produtos,
+        'dias':dias,
     }
     return render(request, 'rufos/detalhes_cliente.html', context)
 
