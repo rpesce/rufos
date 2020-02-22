@@ -1,4 +1,3 @@
-<p><a href="/">Back to index</a></p>
 <h1>{{ cliente.cliente_nome_fantasia }}</h1>
 {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
 
@@ -9,36 +8,42 @@
         <input type="text" name="cliente_nome_fantasia" value="{{ cliente.cliente_nome_fantasia }}"></li>
         <li><label for="cliente_razao_social">Razão Social: </label>
         <input type="text" name="cliente_nome_fantasia" value="{{ cliente.cliente_razao_social }}"></li>
-
         <li><label for="cliente_rua">Endereço: </label>
         <input type="text" name="cliente_rua" value="{{ cliente.cliente_rua }}">
         <label for="cliente_numero"></label>
         <input type="text" name="cliente_numero" value="{{ cliente.cliente_numero }}">
         <label for="cliente_complemento"></label>
         <input type="text" name="cliente_complemento" value="{{ cliente.cliente_complemento }}"></li>
-
         <li><label for="cliente_cep">CEP: </label>
         <input type="text" name="cliente_cep" value="{{ cliente.cliente_cep }}"></li>
-
         <li><label for="cliente_cidade">Cidade: </label>
         <input type="text" name="cliente_cidade" value="{{ cliente.cliente_cidade }}"></li>
 
-        <li><label for="cliente_lista_precos">Tabela de preços: </label>
-        <input type="text" name="cliente_lista_precos" value="{{ cliente.cliente_lista_precos }}"></li>
+        <li><label for="cliente_lista_precos">Tabela de preços: </label></li>
+        {% for cl in cliente.cliente_tabela_opcoes %}
+            <ul>
+                <li><input type="radio" name="cliente_lista_precos" value="{{ cl.0 }}" {% if cl.0 == cliente.cliente_lista_precos %}checked{% endif %}>{{ cl.1 }}</li>
+            </ul>
+        {% endfor %}
 
         <li><label for="cliente_ativo">Situação: </label>
         <input type="text" name="cliente_ativo" value="{% if cliente.cliente_ativo == True %} Ativo {% else %} Inativo {% endif %}"></li>
+
     </ul>
     <h2>Contato</h2>
     <ul>
         <li><label for="cliente_nome_contato">Nome: </label>
         <input type="text" name="cliente_nome_contato" value="{{ cliente.cliente_nome_contato }}"></li>
         <li><label for="cliente_email">Email: </label>
-        <input type="text" name="cliente_email" value="{{ cliente.cliente_email }}"></li>
+        <input type="email" name="cliente_email" value="{{ cliente.cliente_email }}"></li>
         <li><label for="cliente_telefone">Telefone: </label>
-        <input type="text" name="cliente_telefone" value="{{ cliente.cliente_telefone }}"></li>
+        <input type="tel" name="cliente_telefone" pattern="[0-9]{2}-[0-9]{5}-[0-9]{4}" value="{{ cliente.cliente_telefone }}"></li>
         <li><label for="cliente_dias_entrega">Dias de entrega: </label>
         <input type="text" name="cliente_dias_entrega" value="{% for d in dias %} {{ d.cliente_dias_entrega }} {% endfor %}"></li>
     </ul>
-    <input type="submit" value="Salvar">
+    <input type="submit" value="Salvar alterações">
+    <button type="reset">Descartar alterações</button>
 </form>
+
+<p><a href="{% url 'rufos:detalhes_cliente' cliente.id %}">Back</a></p>
+<p><a href="/">Index</a></p>
