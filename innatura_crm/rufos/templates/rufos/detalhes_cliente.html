@@ -17,6 +17,8 @@
     <li><b>Dias de entrega:</b> {% for d in dias %} {{ d.cliente_dias_entrega }} {% endfor %}</li>
 </ul>
 
+<a href="{% url 'rufos:edit_cliente' cliente.id %}">Editar Cliente</a>
+
 {% if pedido %}
     <hr>
     <h2>Pedidos</h2>
