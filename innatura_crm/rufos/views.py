@@ -45,9 +45,11 @@ def detalhes_produto(request, produto_id):
 
 def edit_cliente(request, cliente_id):
     cliente = get_object_or_404(Cliente, pk=cliente_id)
-    dias = cliente.cliente_dias_entrega.all()
+    dias = Entrega.objects.all()
+    cliente_dias = cliente.cliente_dias_entrega.all()
     context={
         'cliente':cliente,
+        'cliente_dias':cliente_dias,
         'dias':dias,
     }
     return render(request, 'rufos/edit_cliente.html', context)
