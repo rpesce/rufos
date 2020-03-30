@@ -2,6 +2,7 @@ from django.db import models
 
 # Create your models here.
 
+
 class Entrega(models.Model):
     segunda = 'SEG'
     terca = 'TER'
@@ -23,9 +24,10 @@ class Entrega(models.Model):
         max_length = 3,
         choices = entrega_opcoes,
     )
-    
+
     def __str__(self):
         return self.cliente_dias_entrega
+
 
 class Cliente(models.Model):
     pessoa_fisica = 'FIS'
@@ -36,8 +38,8 @@ class Cliente(models.Model):
     ]
     cliente_tipo = models.CharField(
         verbose_name="tipo",
-        max_length = 3,
-        choices = cliente_tipo_opcoes,
+        max_length=3,
+        choices=cliente_tipo_opcoes,
     )
     cliente_nome_fantasia = models.CharField(verbose_name="nome fantasia", max_length=200)
     cliente_razao_social = models.CharField(verbose_name="razão social", max_length=200)
@@ -68,9 +70,10 @@ class Cliente(models.Model):
     )
     cliente_ativo = models.BooleanField(default=True)
     datestamp = models.DateTimeField(auto_now_add=True)
-    
+
     def __str__(self):
         return self.cliente_nome_fantasia
+
 
 class Produto(models.Model):
     produto_nome = models.CharField(verbose_name="produto", max_length=200)
@@ -154,7 +157,7 @@ class PedidoProduto(models.Model):
         self.tabela = self.pedido.pedido_cliente.cliente_lista_precos
         print(tabela)
         
-         , quantidade, produto if tabela == "TB1":
+    , quantidade, produto if tabela == "TB1":
             self.valor_total = self.quantidade * self.produto.produto_preco_tb1
         elif tabela == "TB2":
             self.valor_total = self.quantidade * self.produto.produto_preco_tb2

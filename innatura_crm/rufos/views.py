@@ -4,17 +4,22 @@ from django.http import HttpResponse
 from django.urls import reverse
 
 from .models import Cliente, Pedido, PedidoProduto, Produto, Entrega
+from .forms import BuscarCliente
 
+#def index(request):
+    #all_clients = Cliente.objects.all()
+    #context = {
+        #'all_clients': all_clients,
+    #}
+    #return render(request, 'rufos/index.html', context)
 
 def index(request):
-    #return HttpResponse("Aqui o rufos vai colocar todo o front end (Criar uma API)")
-    all_clients = Cliente.objects.all()
-    context = {
-        'all_clients': all_clients,
-    }
-    return render(request, 'rufos/index.html', context)
+    form = BuscarCliente()
+    return render(request, 'rufos/index.html', {'form': form})
 
-def detalhes_cliente(request, cliente_id):
+
+def detalhes_cliente(request):
+    cliente_id = request.GET['q']
     cliente = get_object_or_404(Cliente, pk=cliente_id)
     pedido = Pedido.objects.filter(pedido_cliente=cliente_id)
     produtos = PedidoProduto.objects.all()
@@ -27,6 +32,7 @@ def detalhes_cliente(request, cliente_id):
     }
     return render(request, 'rufos/detalhes_cliente.html', context)
 
+
 def detalhes_pedido(request, pedido_id):
     pedido = get_object_or_404(Pedido, pk=pedido_id)
     produto = PedidoProduto.objects.filter(pedido_id=pedido_id)
@@ -36,12 +42,14 @@ def detalhes_pedido(request, pedido_id):
     }
     return render(request, 'rufos/detalhes_pedido.html', context)
 
+
 def detalhes_produto(request, produto_id):
     produto = get_object_or_404(Produto, pk=produto_id)
     context={
         'produto':produto,
     }
     return render(request, 'rufos/detalhes_produto.html', context)
+
 
 def edit_cliente(request, cliente_id):
     cliente = get_object_or_404(Cliente, pk=cliente_id)
@@ -53,23 +61,6 @@ def edit_cliente(request, cliente_id):
         'dias':dias,
     }
     return render(request, 'rufos/edit_cliente.html', context)
-
-
- try:
-        selected_choice = question.choice_set.get(pk=request.POST['choice'])
-    except (KeyError, Choice.DoesNotExist):
-        # Redisplay the question voting form.
-        return render(request, 'polls/detail.html', {
-            'question': question,
-            'error_message': "You didn't select a choice.",
-        })
-    else:
-        selected_choice.votes += 1
-        selected_choice.save()
-        # Always return an HttpResponseRedirect after successfully dealing
-        # with POST data. This prevents data from being posted twice if a
-        # user hits the Back button.
-
 
 
 

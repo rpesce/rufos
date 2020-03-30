@@ -1,0 +1,22 @@
+<!--{% if all_clients %}
+    <h1> Lista de clientes </h1>
+    <table>
+        <tr>
+            <th>Nome</th>
+            <th>Cidade</th>
+            <th>Telefone</th>
+        </tr>
+        {% for cli in all_clients %}
+            <tr>
+                <td>{{ cli.cliente_nome_fantasia }}</td>
+                <td>{{ cli.cliente_cidade }}</td>
+                <td>{{ cli.cliente_telefone }}</td>
+                <td><a href="{% url 'rufos:detalhes_cliente' cli.id %}">Ver cliente</a></td>
+            </tr>
+        {% endfor %}
+    </table>
+{% else %}
+    <p>Sua lista não contém nenhum cliente.</p>
+{% endif %}-->
+
+<h1>Teplate</h1>
