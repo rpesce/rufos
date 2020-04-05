@@ -1,17 +1,11 @@
 # Create your views here.
-from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse
 from django.urls import reverse
 
+from django.shortcuts import render, get_object_or_404
 from .models import Cliente, Pedido, PedidoProduto, Produto, Entrega
 from .forms import BuscarCliente
 
-#def index(request):
-    #all_clients = Cliente.objects.all()
-    #context = {
-        #'all_clients': all_clients,
-    #}
-    #return render(request, 'rufos/index.html', context)
 
 def index(request):
     form = BuscarCliente()
@@ -19,8 +13,9 @@ def index(request):
 
 
 def detalhes_cliente(request):
-    cliente_id = request.GET['q']
-    cliente = get_object_or_404(Cliente, pk=cliente_id)
+    user_input = request.GET['q']
+    cliente = get_object_or_404(Cliente, cliente_email=user_input)
+    cliente_id = cliente.id
     pedido = Pedido.objects.filter(pedido_cliente=cliente_id)
     produtos = PedidoProduto.objects.all()
     dias = cliente.cliente_dias_entrega.all()
@@ -61,7 +56,3 @@ def edit_cliente(request, cliente_id):
         'dias':dias,
     }
     return render(request, 'rufos/edit_cliente.html', context)
-
-
-
-

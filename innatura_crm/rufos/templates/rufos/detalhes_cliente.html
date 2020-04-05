@@ -1,52 +1,163 @@
-<p><a href="/">Back to index</a></p>
-<h1>{{ cliente.cliente_nome_fantasia }}</h1>
-<ul>
-    <li><b>Nome Fantasia:</b> {{ cliente.cliente_nome_fantasia }}</li>
-    <li><b>Razão Social:</b> {{ cliente.cliente_razao_social }}</li>
-    <li><b>Endereço:</b> {{ cliente.cliente_rua }}, {{ cliente.cliente_numero }} / {{ cliente.cliente_complemento }}</li>
-    <li><b>CEP:</b> {{ cliente.cliente_cep }}</li>
-    <li><b>Cidade:</b> {{ cliente.cliente_cidade }}</li>
-    <li><b>Preço:</b> {{ cliente.cliente_lista_precos }}</li>
-    <li><b>Situação:</b> {% if cliente.cliente_ativo == True %} Ativo {% else %} Inativo {% endif %}</li>
-</ul>
-<h2>Contato</h2>
-<ul>
-    <li><b>Nome:</b> {{ cliente.cliente_nome_contato }}</li>
-    <li><b>Email:</b> {{ cliente.cliente_email }}</li>
-    <li><b>Telefone:</b> {{ cliente.cliente_telefone }}</li>
-    <li><b>Dias de entrega:</b> {% for d in dias %} {{ d.cliente_dias_entrega }} {% endfor %}</li>
-</ul>
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
 
-<a href="{% url 'rufos:edit_cliente' cliente.id %}">Editar Cliente</a>
+<head>
 
-{% if pedido %}
-    <hr>
-    <h2>Pedidos</h2>
-        {% for p in pedido %}
-        <h4><a href="{% url 'rufos:detalhes_pedido' p.id %}"><b>#Pedido: </b>{{ p.id }}</a></h4>
-        <ul>
-            <li><b>Data: </b>{{ p.pedido_date }}</li>
-            <li><b>Tipo de pagamento: </b>{{ p.pedido_pagamento }}</li>
-            <li><b>Status do Pedido: </b>{{ p.pedido_status }}</li>
-            <li><b>Tabela: </b>{{ p.pedido_cliente.cliente_lista_precos }}</li>
-            <li><b>Produtos:</b>
-            {% for prd in produtos %}
-                {% if prd.pedido_id == p.id %}
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>Innatura - Produtos Orgânicos</title>
+  <link href="{% static 'img/favicon.ico' %}" rel="icon">
+
+  <!-- Bootstrap core CSS -->
+  <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+
+  <!-- Custom fonts for this template -->
+  <link href="{% static 'vendor/fontawesome-free/css/all.min.css' %}" rel="stylesheet">
+  <link href="{% static 'vendor/simple-line-icons/css/simple-line-icons.css' %}" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
+
+  <!-- Custom styles for this template -->
+  <link href="{% static 'css/landing-page.min.css' %}" rel="stylesheet">
+</head>
+
+<body>
+
+  <!-- Navigation -->
+  <nav class="navbar navbar-light bg-light static-top">
+    <div class="container">
+      <a class="navbar-brand" href="https://www.innaturabrotos.com.br"><img src="{% static 'img/innatura_logo.png' %}" alt="Innatura logo" height="60px"></a>
+      <a class="btn btn-primary" href="http://127.0.0.1:8000/admin/login/?next=/admin/" target="_blank">Acesso restrito</a>
+    </div>
+  </nav>
+
+  <!-- Page Content -->
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8">
+        <h1 class="my-4">Lista de pedidos <small>({{ cliente.cliente_nome_fantasia }})</small></h1>
+
+        <!-- Pedidos -->
+        {% if pedido %}
+          {% for p in pedido %}
+            <div class="card mb-4">
+              <div class="card-body">
+                <h2 class="card-title"><a href="{% url 'rufos:detalhes_pedido' p.id %}"><b>Pedido #</b>{{ p.id }}</a></h2>
+                <p class="card-text"><b>Tipo de pagamento: </b>{{ p.pedido_pagamento }}</p>
+                <p class="card-text"><b>Status do Pedido: </b>{{ p.pedido_status }}</p>
+                <p class="card-text"><b>Tabela: </b>{{ p.pedido_cliente.cliente_lista_precos }}</p>
+                <p class="card-text"><b>Produtos:</b></p>
+                {% for prd in produtos %}
+                  {% if prd.pedido_id == p.id %}
                     <ul>
-                        <li> {{ prd.quantidade }} x <a href="{% url 'rufos:detalhes_produto' prd.produto_id %}">{{ prd.produto }}</a>,
+                      <li> {{ prd.quantidade }} x <a href="{% url 'rufos:detalhes_produto' prd.produto_id %}">{{ prd.produto }}</a>,
                         {% if prd.pedido.pedido_cliente.cliente_lista_precos == 'tb1' %}
-                            (<b>Preço: </b>R${{ prd.produto.produto_preco_tb1 }})</li>
+                          (<b>Preço: </b>R${{ prd.produto.produto_preco_tb1 }})</li>
                         {% elif prd.pedido.pedido_cliente.cliente_lista_precos == 'tb2' %}
-                            (<b>Preço: </b>R${{ prd.produto.produto_preco_tb2}})</li>
+                          (<b>Preço: </b>R${{ prd.produto.produto_preco_tb2}})</li>
                         {% elif prd.pedido.pedido_cliente.cliente_lista_precos == 'tb3' %}
-                            (<b>Preço: </b>R${{ prd.produto.produto_preco_tb3}})</li>
+                          (<b>Preço: </b>R${{ prd.produto.produto_preco_tb3}})</li>
                         {% endif %}
                     </ul>
-                {% endif %}
-            {% endfor %}
+                  {% endif %}
+                {% endfor %}
+                <p class="card-text"><b>Sub-total: </b>{{ p.pedido_sub_total }}</p>
+                <a href="{% url 'rufos:detalhes_pedido' p.id %}" class="btn btn-primary">Detalhes &rarr;</a>
+                <div class="card-footer text-muted">
+                  Data do pedido: {{ p.pedido_date }}
+                </div>
+              </div>
+            </div>
+          {% endfor %}
+        {% else %}
+          <p>Você não tem nenhum pedido</p>
+        {% endif %}
+      </div>
+
+
+      <!-- Sidebar Widgets Column -->
+      <div class="col-md-4">
+
+        <!-- Side Widget -->
+        <div class="card my-4">
+          <h5 class="card-header">Cliente</h5>
+          <div class="card-body">
+            <p><b>Nome Fantasia:</b> {{ cliente.cliente_nome_fantasia }}</p>
+            <p><b>Razão Social:</b> {{ cliente.cliente_razao_social }}</p>
+            <p><b>Endereço:</b> {{ cliente.cliente_rua }}, {{ cliente.cliente_numero }} / {{ cliente.cliente_complemento }}</p>
+            <p><b>CEP:</b> {{ cliente.cliente_cep }}</p>
+            <p><b>Cidade:</b> {{ cliente.cliente_cidade }}</p>
+            <p><b>Preço:</b> {{ cliente.cliente_lista_precos }}</p>
+            <p><b>Situação:</b> {% if cliente.cliente_ativo == True %} Ativo {% else %} Inativo {% endif %}</p>
+            <p><b>Dias de entrega:</b> {% for d in dias %} {{ d.cliente_dias_entrega }} {% endfor %}</p>
+          </div>
+        </div>
+
+        <div class="card my-4">
+          <h5 class="card-header">Contato</h5>
+          <div class="card-body">
+            <p><b>Nome:</b> {{ cliente.cliente_nome_contato }}</p>
+            <p><b>Email:</b> {{ cliente.cliente_email }}</p>
+            <p><b>Telefone:</b> {{ cliente.cliente_telefone }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer bg-light">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-6 h-100 text-center text-lg-left my-auto">
+          <ul class="list-inline mb-2">
+            <li class="list-inline-item">
+              <a href="#">Sobre</a>
             </li>
-            <li><b>Sub-total: </b>{{ p.pedido_sub_total }}</li>
-        </ul>
-        <hr>
-        {% endfor %}
-{% endif %}
+            <li class="list-inline-item">&sdot;</li>
+            <li class="list-inline-item">
+              <a href="#">Contato</a>
+            </li>
+            <li class="list-inline-item">&sdot;</li>
+            <li class="list-inline-item">
+              <a href="#">Produtos</a>
+            </li>
+            <li class="list-inline-item">&sdot;</li>
+            <li class="list-inline-item">
+              <a href="#">Ceasa</a>
+            </li>
+          </ul>
+          <p class="text-muted small mb-4 mb-lg-0">&copy; Innatura Brotos {% now 'Y' %}. Todos os direitos reservados.</p>
+        </div>
+        <div class="col-lg-6 h-100 text-center text-lg-right my-auto">
+          <ul class="list-inline mb-0">
+            <li class="list-inline-item mr-3">
+              <a href="#">
+                <i class="fab fa-facebook fa-2x fa-fw"></i>
+              </a>
+            </li>
+            <li class="list-inline-item mr-3">
+              <a href="#">
+                <i class="fab fa-twitter-square fa-2x fa-fw"></i>
+              </a>
+            </li>
+            <li class="list-inline-item">
+              <a href="#">
+                <i class="fab fa-instagram fa-2x fa-fw"></i>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Bootstrap core JavaScript -->
+  <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
+  <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+
+</body>
+</html>

@@ -103,7 +103,6 @@
   <section class="showcase">
     <div class="container-fluid p-0">
       <div class="row no-gutters">
-
         <div class="col-lg-6 order-lg-2 text-white showcase-img" style="background-image: url('{% static "img/showcase-1.png" %}');"></div>
         <div class="col-lg-6 order-lg-1 my-auto showcase-text">
           <h2>Mais de 20 anos de tradição!</h2>
@@ -163,16 +162,16 @@
     <div class="container">
       <div class="row">
         <div class="col-xl-9 mx-auto">
-          <h2 class="mb-4">Ready to get started? Sign up now!</h2>
+          <h2 class="mb-4">Busque seu pedido</h2>
         </div>
         <div class="col-md-10 col-lg-8 col-xl-7 mx-auto">
-          <form>
+          <form action="/clientes/" method="get">
             <div class="form-row">
               <div class="col-12 col-md-9 mb-2 mb-md-0">
-                <input type="email" class="form-control form-control-lg" placeholder="Enter your email...">
+                {{ form }}
               </div>
               <div class="col-12 col-md-3">
-                <button type="submit" class="btn btn-block btn-lg btn-primary">Sign up!</button>
+                <button id="q" type="submit" class="btn btn-block btn-lg btn-primary">Buscar</button>
               </div>
             </div>
           </form>
